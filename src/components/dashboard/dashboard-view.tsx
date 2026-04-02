@@ -20,7 +20,6 @@ type BackupPayload = {
 
 type RawDashboardStats = {
   overallPercentage?: number;
-  overall?: number;
   totalSubjects?: number;
   belowThresholdCount?: number;
   belowThresholdSubjects?: unknown[];
@@ -61,7 +60,7 @@ export function DashboardView() {
       const subjects = attendanceModule.getSubjects?.() ?? [];
       const notes = notesModule.getNotes?.() ?? [];
 
-      const attendancePercentage = Number(stats.overallPercentage ?? stats.overall ?? 0);
+      const attendancePercentage = Number(stats?.overallPercentage ?? 0);
 
       const totalSubjects = Number(stats.totalSubjects ?? subjects.length ?? 0);
 
