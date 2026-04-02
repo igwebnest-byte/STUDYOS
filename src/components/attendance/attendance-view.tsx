@@ -46,10 +46,10 @@ export function AttendanceView() {
   const loadAttendance = useCallback(async () => {
     try {
       const attendanceModule = await import("../../../lib/attendance.js");
-      const list = attendanceModule.getSubjects?.() ?? [];
+      const list: Subject[] = attendanceModule.getSubjects?.() ?? [];
       const rawStats: RawAttendanceStats = attendanceModule.getAttendanceStats?.() ?? {};
 
-      const overallRaw = rawStats.overallPercentage ?? 0;
+      const overallValue = Number(rawStats.overallPercentage ?? 0);
 
       const belowFromArray = Array.isArray(rawStats.belowThresholdSubjects)
         ? rawStats.belowThresholdSubjects.length
@@ -58,11 +58,12 @@ export function AttendanceView() {
           : 0;
 
       const belowRaw = rawStats.belowThresholdCount ?? rawStats.subjectsBelow75Count ?? belowFromArray;
+      const belowValue = Number(belowRaw ?? 0);
 
       setSubjects(Array.isArray(list) ? list : []);
       setStats({
-        overallPercentage: Number.isFinite(Number(overallRaw)) ? Number(overallRaw) : 0,
-        belowThresholdCount: Number.isFinite(Number(belowRaw)) ? Number(belowRaw) : 0,
+        overallPercentage: Number.isFinite(overallValue) ? overallValue : 0,
+        belowThresholdCount: Number.isFinite(belowValue) ? belowValue : 0,
       });
     } catch {
       setSubjects([]);
