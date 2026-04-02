@@ -18,6 +18,16 @@ type BackupPayload = {
   college: unknown;
 };
 
+type RawDashboardStats = {
+  overallPercentage?: number;
+  overall?: number;
+  totalSubjects?: number;
+  belowThresholdCount?: number;
+  belowThresholdSubjects?: unknown[];
+  subjectsBelow75?: unknown[];
+  subjectsBelow75Count?: number;
+};
+
 const INITIAL_STATE: DashboardState = {
   attendancePercentage: 0,
   totalSubjects: 0,
@@ -47,17 +57,11 @@ export function DashboardView() {
       const attendanceModule = await import("../../../lib/attendance.js");
       const notesModule = await import("../../../lib/notes.js");
 
-      const stats = attendanceModule.getAttendanceStats?.() ?? {};
+      const stats: RawDashboardStats = attendanceModule.getAttendanceStats?.() ?? {};
       const subjects = attendanceModule.getSubjects?.() ?? [];
       const notes = notesModule.getNotes?.() ?? [];
 
-      const attendancePercentage = Number(
-        stats.overallPercentage ??
-          stats.attendancePercentage ??
-          stats.overallAttendance ??
-          stats.overall ??
-          0,
-      );
+      const attendancePercentage = Number(stats.overallPercentage ?? stats.overall ?? 0);
 
       const totalSubjects = Number(stats.totalSubjects ?? subjects.length ?? 0);
 
