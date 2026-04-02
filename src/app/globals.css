@@ -1,0 +1,86 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root,
+.light {
+  --background: 0 0% 100%;
+  --foreground: 250 28% 12%;
+  --card: 0 0% 100%;
+  --border: 252 24% 90%;
+  --muted: 252 22% 96%;
+  --muted-foreground: 250 18% 42%;
+  --primary: 263 88% 57%;
+  --primary-foreground: 0 0% 100%;
+  --accent: 256 62% 95%;
+  --accent-foreground: 256 42% 22%;
+}
+
+.dark {
+  --background: 248 34% 8%;
+  --foreground: 252 46% 96%;
+  --card: 248 28% 11%;
+  --border: 251 22% 20%;
+  --muted: 250 20% 15%;
+  --muted-foreground: 250 22% 74%;
+  --primary: 267 89% 66%;
+  --primary-foreground: 0 0% 100%;
+  --accent: 251 22% 18%;
+  --accent-foreground: 252 40% 94%;
+}
+
+* {
+  @apply border-border;
+}
+
+html,
+body {
+  @apply bg-background text-foreground;
+}
+
+body {
+  @apply font-sans antialiased;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(148, 93, 255, 0.22), transparent 34%),
+    radial-gradient(circle at 88% 8%, rgba(94, 82, 255, 0.2), transparent 24%),
+    radial-gradient(circle at 50% 100%, rgba(182, 91, 255, 0.15), transparent 32%),
+    linear-gradient(180deg, rgba(14, 13, 28, 0.35) 0%, transparent 100%);
+  min-height: 100vh;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading tracking-tight;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply rounded-2xl border border-border/70 bg-card/80 shadow-card backdrop-blur transition-all duration-200;
+  }
+
+  .surface-card {
+    @apply rounded-2xl border border-border/80 bg-card/75 shadow-[0_18px_55px_-26px_rgba(126,58,242,0.68)] backdrop-blur-sm transition-all duration-200;
+  }
+
+  .surface-card-hover {
+    @apply hover:-translate-y-[1px] hover:border-primary/45 hover:shadow-[0_24px_64px_-28px_rgba(134,78,255,0.78)];
+  }
+
+  .kpi-label {
+    @apply text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground;
+  }
+
+  .section-heading {
+    @apply text-xl font-semibold text-foreground sm:text-2xl;
+  }
+
+  .section-caption {
+    @apply text-sm leading-relaxed text-muted-foreground;
+  }
+}
