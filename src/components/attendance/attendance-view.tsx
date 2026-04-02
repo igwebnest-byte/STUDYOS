@@ -14,6 +14,14 @@ type AttendanceStats = {
   belowThresholdCount: number;
 };
 
+type RawAttendanceStats = {
+  overallPercentage?: number;
+  belowThresholdCount?: number;
+  belowThresholdSubjects?: Subject[];
+  subjectsBelow75?: Subject[];
+  subjectsBelow75Count?: number;
+};
+
 const EMPTY_STATS: AttendanceStats = {
   overallPercentage: 0,
   belowThresholdCount: 0,
@@ -39,14 +47,9 @@ export function AttendanceView() {
     try {
       const attendanceModule = await import("../../../lib/attendance.js");
       const list = attendanceModule.getSubjects?.() ?? [];
-      const rawStats = attendanceModule.getAttendanceStats?.() ?? {};
+      const rawStats: RawAttendanceStats = attendanceModule.getAttendanceStats?.() ?? {};
 
-      const overallRaw =
-        rawStats.overallPercentage ??
-        rawStats.attendancePercentage ??
-        rawStats.overallAttendance ??
-        rawStats.overall ??
-        0;
+      const overallRaw = rawStats.overallPercentage ?? 0;
 
       const belowFromArray = Array.isArray(rawStats.belowThresholdSubjects)
         ? rawStats.belowThresholdSubjects.length
